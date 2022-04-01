@@ -1,7 +1,7 @@
 text = 'some text'
+test = [83, 79, 77, 69, 32, 84, 69, 88, 84]
 # 0 , # 1 . # 2 - # 3 _ # 4 = # 5 + # 6 / # 7 * # 8 > # 9 <
 l_sim = [",", ".", "-", "_", "=", "+", "/", "*", ">", "<"]
-test = [83, 79, 77, 69, 32, 84, 69, 88, 84]
 
 
 def init():
@@ -10,12 +10,15 @@ def init():
     if s_option in ('1', 'encode'):
         print("Insert the text:")
         s_message = input("> ")
-        encode_asc(s_message)
+        encrypted_message = str(encode_asc(s_message))
+        file = open('encrypted_message.txt', 'a')
+        file.write(encrypted_message)
+        print(encrypted_message)
 
     elif s_option in ('2', 'decode'):
         print("Insert the text:")
         s_message = input("> ")
-        decode_bin(s_message.split(' '))
+        print(decode_bin(convert_str_to_list(s_message)))
 
     else:
         print("Invalid option!")
@@ -96,8 +99,17 @@ def decode_asc(l_message):
     return s_result
 
 
-t = encode_asc(text)
-decode_bin(t)
+def convert_str_to_list(string):
+    s_result = string.replace('[', '').split('],')
+    l_result = [list(map(int, s.replace(']', '').split(','))) for s in s_result]
+
+    return l_result
+
+
+# TEST CASE
+# t = str(encode_asc(text))
+# decode_bin(convert_str_to_list(t))
+# END TEST CASE
 
 
 init()
